@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- ========================================================= -->
+  <!-- BASIC -->
+  <!-- ========================================================= -->
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+  <title>MOKA - Premium Streetwear</title>
+
+  <!-- ========================================================= -->
+  <!-- GOOGLE FONTS -->
+  <!-- ========================================================= -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ========================================================= -->
+  <!-- TAILWIND -->
+  <!-- ========================================================= -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ========================================================= -->
+  <!-- FONT AWESOME -->
+  <!-- ========================================================= -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <!-- ========================================================= -->
+  <!-- STYLE -->
+  <!-- ========================================================= -->
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#000;
+      color:white;
+      font-family:'Inter','Cairo',sans-serif;
+      overflow-x:hidden;
+    }
+
+    h1,h2,h3,h4{
+      font-family:'Poppins',sans-serif;
+    }
+
+    .arabic-ui{
+      font-family:'Cairo','Inter',sans-serif;
+    }
+
+    .muted-brand{
+      color:rgba(255,255,255,.68);
+      text-shadow:0 0 18px rgba(255,255,255,.08);
+    }
+
+    ::-webkit-scrollbar{
+      width:10px;
+    }
+
+    ::-webkit-scrollbar-track{
+      background:black;
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:#333;
+      border-radius:20px;
+    }
+
+    .hero-image{
+      animation: zoomHero 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes zoomHero{
+      0%{ transform:scale(1); }
+      100%{ transform:scale(1.08); }
+    }
+
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translateY(40px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+
+    @keyframes glow {
+      0%{ text-shadow:0 0 10px rgba(255,255,255,.2), 0 0 20px rgba(255,255,255,.1); }
+      50%{ text-shadow:0 0 25px rgba(255,255,255,.7), 0 0 50px rgba(255,255,255,.4); }
+      100%{ text-shadow:0 0 10px rgba(255,255,255,.2), 0 0 20px rgba(255,255,255,.1); }
+    }
+
+    @keyframes modalIn{
+      from{ opacity:0; transform:scale(.92) translateY(20px); }
+      to{ opacity:1; transform:scale(1) translateY(0); }
+    }
+
+    @keyframes popIn{
+      from{ opacity:0; transform:scale(.85); }
+      to{ opacity:1; transform:scale(1); }
+    }
+
+    .fade-up{ animation:fadeUp 1s ease forwards; }
+    .logo-glow{ animation:glow 3s infinite; }
+
+    .glass{
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .main-btn{
+      transition:0.35s cubic-bezier(.22,1,.36,1);
+    }
+
+    .main-btn:hover{
+      transform:translateY(-4px);
+      letter-spacing:2px;
+      box-shadow:0 10px 30px rgba(255,255,255,.15);
+    }
+
+    .product-card{
+      transition:.4s;
+    }
+
+    .product-card img{
+      transition:.6s cubic-bezier(.22,1,.36,1);
+    }
+
+    .product-card:hover img{
+      transform:scale(1.08);
+    }
+
+    .product-card:hover{
+      transform:translateY(-6px);
+    }
+
+    .luxury-select, .luxury-input, .luxury-textarea{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.15);
+      color:white;
+      border-radius:12px;
+      padding:12px 14px;
+      width:100%;
+      font-size:14px;
+      transition:.3s;
+      outline:none;
+    }
+
+    .luxury-select:focus, .luxury-input:focus, .luxury-textarea:focus{
+      border-color:rgba(255,255,255,0.6);
+      background:rgba(255,255,255,0.1);
+    }
+
+    .luxury-select option{
+      background:#111;
+      color:white;
+    }
+
+    .qty-btn{
+      width:38px;
+      height:38px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:10px;
+      cursor:pointer;
+      transition:.25s;
+      user-select:none;
+    }
+
+    .qty-btn:hover{
+      background:rgba(255,255,255,0.2);
+    }
+
+    .qty-input{
+      width:50px;
+      text-align:center;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:10px;
+      color:white;
+      padding:8px 4px;
+      font-weight:700;
+    }
+
+    .floating-cart{
+      position:fixed;
+      right:24px;
+      bottom:24px;
+      width:70px;
+      height:70px;
+      background:white;
+      color:black;
+      border-radius:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:22px;
+      cursor:pointer;
+      z-index:900;
+      box-shadow:0 0 30px rgba(255,255,255,.25);
+      transition:.3s;
+    }
+
+    .floating-cart:hover{
+      transform:scale(1.1);
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      background:rgba(0,0,0,0.82);
+      backdrop-filter:blur(8px);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      overflow-y:auto;
+    }
+
+    .modal.active{
+      display:flex;
+    }
+
+    .modal-box{
+      animation:modalIn .35s cubic-bezier(.22,1,.36,1);
+      max-height:90vh;
+      overflow-y:auto;
+    }
+
+    .popup-box{
+      animation:popIn .3s cubic-bezier(.22,1,.36,1);
+    }
+
+    .modal-close{
+      position:absolute;
+      top:16px;
+      right:16px;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:.25s;
+    }
+
+    .modal-close:hover{
+      background:rgba(255,255,255,0.2);
+      transform:rotate(90deg);
+    }
+
+    .field-label{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      color:#999;
+      margin-bottom:6px;
+      display:block;
+    }
+
+    .mobile-menu{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .4s ease;
+    }
+
+    .mobile-menu.open{
+      max-height:300px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/10">
+
+  <div class="max-w-7xl mx-auto px-5 md:px-6 py-4 md:py-5 flex justify-between items-center">
+
+    <h1 class="text-2xl md:text-3xl font-black tracking-[4px] md:tracking-[6px]">
+      MOKA
+    </h1>
+
+    <div class="hidden md:flex gap-10 uppercase tracking-[3px] text-sm arabic-ui">
+      <a href="#shop" class="hover:text-gray-300 transition">تسوق</a>
+      <a href="#collections" class="hover:text-gray-300 transition">الكولكشن</a>
+      <a href="#reviews" class="hover:text-gray-300 transition">آراء العملاء</a>
+      <a href="#support" class="hover:text-gray-300 transition">الدعم</a>
+      <a href="https://www.instagram.com/moka_fashion109" target="_blank" class="hover:text-gray-300 transition">Instagram</a>
+    </div>
+
+    <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
+      <i class="fa-solid fa-bars" id="menuIcon"></i>
+    </button>
+
+  </div>
+
+  <div class="mobile-menu md:hidden px-5" id="mobileMenu">
+    <div class="flex flex-col gap-1 pb-5 uppercase tracking-[2px] text-sm border-t border-white/10 pt-4 arabic-ui">
+      <a href="#shop" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">تسوق</a>
+      <a href="#collections" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">الكولكشن</a>
+      <a href="#reviews" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">آراء العملاء</a>
+      <a href="#support" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">الدعم</a>
+      <a href="https://www.instagram.com/moka_fashion109" target="_blank" class="py-3">Instagram</a>
+    </div>
+  </div>
+
+</nav>
+
+<section class="relative h-screen overflow-hidden">
+
+  <img
+    src="./WhatsApp Image 2026-05-25 at 1.22.55 AM.jpeg"
+    alt="MOKA HERO"
+    class="hero-image absolute inset-0 w-full h-full object-cover object-center"
+  />
+
+  <div class="absolute inset-0 bg-black/60"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/40"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent"></div>
+
+  <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+
+    <div class="max-w-4xl mx-auto flex flex-col items-center">
+
+      <h2 class="fade-up muted-brand tracking-[6px] md:tracking-[8px] uppercase mb-4 text-xs md:text-lg">
+        Premium Egyptian Streetwear
+      </h2>
+
+      <h1 class="logo-glow fade-up text-7xl sm:text-8xl md:text-[150px] font-black leading-none">
+        MOKA
+      </h1>
+
+      <p class="fade-up muted-brand text-base md:text-2xl mt-6 max-w-2xl leading-relaxed">
+        More than fashion, it's a lifestyle.
+        Luxury oversized streetwear built for confidence and comfort.
+      </p>
+
+      <div class="fade-up mt-10 flex gap-4 md:gap-5 flex-wrap justify-center">
+
+        <a href="#shop" class="main-btn arabic-ui bg-white text-black px-8 md:px-10 py-4 rounded-full uppercase tracking-[2px] font-bold text-sm md:text-base">
+          تسوق الآن
+        </a>
+
+        <a href="#collections" class="main-btn arabic-ui border border-white/70 px-8 md:px-10 py-4 rounded-full uppercase tracking-[2px] text-sm md:text-base">
+          اكتشف
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="collections" class="py-20 md:py-28 px-5 md:px-6 bg-black">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="mb-12 md:mb-16">
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black">COLLECTIONS</h2>
+      <p class="text-gray-400 mt-4 text-base md:text-lg">Built for modern streetwear lovers.</p>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Oversized</div>
+      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Hoodies</div>
+      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Gym Wear</div>
+      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Pants</div>
+      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition col-span-2 lg:col-span-1">Essentials</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="shop" class="py-20 md:py-28 px-5 md:px-6 bg-[#050505]">
+
+  <div class="max-w-7xl mx-auto">
+
+    <h2 class="text-4xl sm:text-5xl md:text-7xl font-black mb-12 md:mb-16">FEATURED PRODUCTS</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+
+      <div class="product-card glass rounded-3xl p-4" data-name="Black Oversized Tee" data-price="599">
+
+        <div class="overflow-hidden rounded-2xl border border-white/10">
+          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
+        </div>
+
+        <h3 class="text-xl md:text-2xl font-bold mt-4">Black Oversized Tee</h3>
+        <p class="text-gray-400 mt-1 text-sm">Premium Cotton Oversized Fit</p>
+
+        <div class="flex justify-between items-center mt-4">
+          <span class="text-2xl md:text-3xl font-black">599 EGP</span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div>
+            <label class="field-label arabic-ui">اللون</label>
+            <select class="luxury-select color-select">
+              <option>Black</option>
+              <option>White</option>
+              <option>Gray</option>
+              <option>Beige</option>
+              <option>Brown</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label arabic-ui">المقاس</label>
+            <select class="luxury-select size-select">
+              <option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <label class="field-label mb-0 arabic-ui">الكمية</label>
+          <div class="flex items-center gap-2">
+            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
+            <input type="number" class="qty-input" value="1" min="1">
+            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
+          </div>
+        </div>
+
+        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
+          اطلب الآن
+        </button>
+
+      </div>
+
+      <div class="product-card glass rounded-3xl p-4" data-name="Premium Hoodie" data-price="899">
+
+        <div class="overflow-hidden rounded-2xl border border-white/10">
+          <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
+        </div>
+
+        <h3 class="text-xl md:text-2xl font-bold mt-4">Premium Hoodie</h3>
+        <p class="text-gray-400 mt-1 text-sm">Luxury Winter Collection</p>
+
+        <div class="flex justify-between items-center mt-4">
+          <span class="text-2xl md:text-3xl font-black">899 EGP</span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div>
+            <label class="field-label arabic-ui">اللون</label>
+            <select class="luxury-select color-select">
+              <option>Black</option>
+              <option>White</option>
+              <option>Gray</option>
+              <option>Beige</option>
+              <option>Brown</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label arabic-ui">المقاس</label>
+            <select class="luxury-select size-select">
+              <option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <label class="field-label mb-0 arabic-ui">الكمية</label>
+          <div class="flex items-center gap-2">
+            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
+            <input type="number" class="qty-input" value="1" min="1">
+            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
+          </div>
+        </div>
+
+        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
+          اطلب الآن
+        </button>
+
+      </div>
+
+      <div class="product-card glass rounded-3xl p-4" data-name="White Oversized Tee" data-price="649">
+
+        <div class="overflow-hidden rounded-2xl border border-white/10">
+          <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
+        </div>
+
+        <h3 class="text-xl md:text-2xl font-bold mt-4">White Oversized Tee</h3>
+        <p class="text-gray-400 mt-1 text-sm">Minimal Streetwear Design</p>
+
+        <div class="flex justify-between items-center mt-4">
+          <span class="text-2xl md:text-3xl font-black">649 EGP</span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div>
+            <label class="field-label arabic-ui">اللون</label>
+            <select class="luxury-select color-select">
+              <option>Black</option>
+              <option selected>White</option>
+              <option>Gray</option>
+              <option>Beige</option>
+              <option>Brown</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label arabic-ui">المقاس</label>
+            <select class="luxury-select size-select">
+              <option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <label class="field-label mb-0 arabic-ui">الكمية</label>
+          <div class="flex items-center gap-2">
+            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
+            <input type="number" class="qty-input" value="1" min="1">
+            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
+          </div>
+        </div>
+
+        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
+          اطلب الآن
+        </button>
+
+      </div>
+
+      <div class="product-card glass rounded-3xl p-4" data-name="Luxury Pants" data-price="799">
+
+        <div class="overflow-hidden rounded-2xl border border-white/10">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
+        </div>
+
+        <h3 class="text-xl md:text-2xl font-bold mt-4">Luxury Pants</h3>
+        <p class="text-gray-400 mt-1 text-sm">Clean Premium Fit</p>
+
+        <div class="flex justify-between items-center mt-4">
+          <span class="text-2xl md:text-3xl font-black">799 EGP</span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div>
+            <label class="field-label arabic-ui">اللون</label>
+            <select class="luxury-select color-select">
+              <option>Black</option>
+              <option>White</option>
+              <option>Gray</option>
+              <option>Beige</option>
+              <option>Brown</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label arabic-ui">المقاس</label>
+            <select class="luxury-select size-select">
+              <option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <label class="field-label mb-0 arabic-ui">الكمية</label>
+          <div class="flex items-center gap-2">
+            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
+            <input type="number" class="qty-input" value="1" min="1">
+            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
+          </div>
+        </div>
+
+        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
+          اطلب الآن
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="reviews" class="py-20 md:py-28 px-5 md:px-6 bg-black">
+
+  <div class="max-w-7xl mx-auto">
+
+    <h2 class="text-4xl sm:text-5xl md:text-7xl font-black mb-12 md:mb-16 leading-tight">
+      LET CUSTOMERS
+      <br>
+      SPEAK FOR US
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+
+      <div class="glass p-8 rounded-3xl">
+        <p class="text-gray-300 text-lg">"Best oversized fit I've ever bought in Egypt."</p>
+        <h3 class="mt-6 text-xl font-bold">Ahmed</h3>
+      </div>
+
+      <div class="glass p-8 rounded-3xl">
+        <p class="text-gray-300 text-lg">"Luxury quality. Packaging and fit are insane."</p>
+        <h3 class="mt-6 text-xl font-bold">Karim</h3>
+      </div>
+
+      <div class="glass p-8 rounded-3xl">
+        <p class="text-gray-300 text-lg">"MOKA feels like an international fashion brand."</p>
+        <h3 class="mt-6 text-xl font-bold">Omar</h3>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="support" class="py-20 md:py-28 px-5 md:px-6 bg-[#050505]">
+
+  <div class="max-w-4xl mx-auto text-center glass rounded-3xl p-10 md:p-16">
+
+    <h2 class="text-3xl sm:text-4xl md:text-6xl font-black arabic-ui">خدمة العملاء</h2>
+    <p class="text-gray-400 mt-4 text-base md:text-lg arabic-ui">محتاج مساعدة؟ تواصل معنا مباشرة.</p>
+
+    <button onclick="openComplaintModal()" class="main-btn arabic-ui mt-8 bg-white text-black px-10 py-4 rounded-full uppercase tracking-[2px] font-bold text-sm md:text-base">
+      إرسال شكوى
+    </button>
+
+  </div>
+
+</section>
+
+<footer class="py-12 md:py-14 border-t border-white/10 bg-black">
+
+  <div class="max-w-7xl mx-auto px-5 md:px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+
+    <div>
+      <h2 class="text-2xl md:text-3xl font-black tracking-[4px] md:tracking-[6px]">MOKA</h2>
+      <p class="text-gray-500 mt-3">More than fashion, it's a lifestyle.</p>
+    </div>
+
+    <div class="flex gap-5 text-2xl">
+      <a href="https://www.instagram.com/moka_fashion109" target="_blank" class="hover:text-gray-400 transition">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="text-center text-gray-600 mt-10 text-sm px-5">
+    Â© Abdelrahman Elsherif 2026. All rights reserved.
+  </div>
+
+</footer>
+
+<a href="#shop" class="floating-cart" title="Go to Shop">
+  <i class="fa-solid fa-bag-shopping"></i>
+</a>
+
+<div class="modal arabic-ui" id="orderModal" dir="rtl">
+  <div class="modal-box glass rounded-3xl p-6 md:p-8 w-full max-w-lg relative">
+
+    <div class="modal-close" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></div>
+
+    <h3 class="text-2xl md:text-3xl font-black mb-1">كمّل طلبك</h3>
+    <p class="text-gray-400 text-sm mb-6">اكتب بياناتك وهنأكد معاك على واتساب.</p>
+
+    <div class="glass rounded-2xl p-4 mb-6 text-sm space-y-1" id="orderSummaryBox">
+    </div>
+
+    <div class="space-y-4">
+
+      <div>
+        <label class="field-label">الاسم بالكامل</label>
+        <input type="text" id="custName" class="luxury-input" placeholder="أحمد محمد">
+      </div>
+
+      <div>
+        <label class="field-label">رقم الموبايل</label>
+        <input type="tel" id="custPhone" class="luxury-input" placeholder="01000000000">
+      </div>
+
+      <div>
+        <label class="field-label">المحافظة</label>
+        <select id="custGov" class="luxury-select">
+          <option value="">اختر المحافظة</option>
+          <option>القاهرة</option>
+          <option>الجيزة</option>
+          <option>الإسكندرية</option>
+          <option>القليوبية</option>
+          <option>الشرقية</option>
+          <option>الدقهلية</option>
+          <option>الغربية</option>
+          <option>المنوفية</option>
+          <option>البحيرة</option>
+          <option>كفر الشيخ</option>
+          <option>دمياط</option>
+          <option>بورسعيد</option>
+          <option>الإسماعيلية</option>
+          <option>السويس</option>
+          <option>شمال سيناء</option>
+          <option>جنوب سيناء</option>
+          <option>الفيوم</option>
+          <option>بني سويف</option>
+          <option>المنيا</option>
+          <option>أسيوط</option>
+          <option>سوهاج</option>
+          <option>قنا</option>
+          <option>الأقصر</option>
+          <option>أسوان</option>
+          <option>البحر الأحمر</option>
+          <option>الوادي الجديد</option>
+          <option>مطروح</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="field-label">المدينة</label>
+        <input type="text" id="custCity" class="luxury-input" placeholder="مثال: مدينة نصر">
+      </div>
+
+      <div>
+        <label class="field-label">العنوان بالكامل</label>
+        <input type="text" id="custAddress" class="luxury-input" placeholder="الشارع، العمارة، الدور...">
+      </div>
+
+      <div>
+        <label class="field-label">كود الخصم (اختياري)</label>
+        <input type="text" id="discountCode" class="luxury-input" placeholder="اكتب كود الخصم" oninput="updateOrderSummary()">
+        <p id="discountHint" class="text-gray-400 text-xs mt-2"></p>
+      </div>
+
+      <button onclick="sendOrder()" class="main-btn w-full bg-white text-black px-6 py-4 rounded-full uppercase font-bold tracking-[2px] mt-2">
+        إرسال الطلب
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="modal arabic-ui" id="complaintModal" dir="rtl">
+  <div class="modal-box glass rounded-3xl p-6 md:p-8 w-full max-w-md relative">
+
+    <div class="modal-close" onclick="closeComplaintModal()"><i class="fa-solid fa-xmark"></i></div>
+
+    <h3 class="text-2xl md:text-3xl font-black mb-1">إرسال شكوى</h3>
+    <p class="text-gray-400 text-sm mb-6">هنرد عليك في أسرع وقت.</p>
+
+    <div class="space-y-4">
+
+      <div>
+        <label class="field-label">الاسم</label>
+        <input type="text" id="complaintName" class="luxury-input" placeholder="اسمك">
+      </div>
+
+      <div>
+        <label class="field-label">الموبايل</label>
+        <input type="tel" id="complaintPhone" class="luxury-input" placeholder="01000000000">
+      </div>
+
+      <div>
+        <label class="field-label">الشكوى</label>
+        <textarea id="complaintText" class="luxury-textarea" rows="4" placeholder="اكتب تفاصيل المشكلة..."></textarea>
+      </div>
+
+      <button onclick="sendComplaint()" class="main-btn w-full bg-white text-black px-6 py-4 rounded-full uppercase font-bold tracking-[3px] mt-2">
+        إرسال الشكوى
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  const SALES_NUMBER = "201121616260";
+  const COMPLAINTS_NUMBER = "201145321460";
+  const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzAjxzrBSkjdDtJPthPIRmmHdYK4fjt0e0aLA6lp-qnPTllUiCF_hF-H-d47AyngHY/exec";
+  const DISCOUNT_CODE = "A1GX3S1T3N";
+  const DISCOUNT_RATE = 0.10;
+
+  let currentOrder = null;
+
+  function toggleMobileMenu(){
+    const menu = document.getElementById("mobileMenu");
+    const icon = document.getElementById("menuIcon");
+    menu.classList.toggle("open");
+    icon.classList.toggle("fa-bars");
+    icon.classList.toggle("fa-xmark");
+  }
+
+  function closeMobileMenu(){
+    const menu = document.getElementById("mobileMenu");
+    const icon = document.getElementById("menuIcon");
+    menu.classList.remove("open");
+    icon.classList.add("fa-bars");
+    icon.classList.remove("fa-xmark");
+  }
+
+  function changeQty(btn, delta){
+    const input = delta < 0 ? btn.nextElementSibling : btn.previousElementSibling;
+    let val = parseInt(input.value) || 1;
+    val += delta;
+    if(val < 1) val = 1;
+    input.value = val;
+  }
+
+  function openOrderModal(btn){
+    const card = btn.closest(".product-card");
+    const name = card.getAttribute("data-name");
+    const price = parseFloat(card.getAttribute("data-price"));
+    const color = card.querySelector(".color-select").value;
+    const size = card.querySelector(".size-select").value;
+    const qty = parseInt(card.querySelector(".qty-input").value) || 1;
+
+    currentOrder = { name, price, color, size, qty };
+
+    document.getElementById("discountCode").value = "";
+    document.getElementById("discountHint").textContent = "";
+    updateOrderSummary();
+
+    document.getElementById("orderModal").classList.add("active");
+  }
+
+  function getDiscountDetails(){
+    if(!currentOrder){
+      return {
+        subtotal: 0,
+        discountCode: "",
+        discountApplied: false,
+        discountAmount: 0,
+        finalTotal: 0
+      };
+    }
+
+    const subtotal = currentOrder.price * currentOrder.qty;
+    const discountInput = document.getElementById("discountCode");
+    const discountCode = discountInput ? discountInput.value.trim().toUpperCase() : "";
+    const discountApplied = discountCode === DISCOUNT_CODE;
+    const discountAmount = discountApplied ? Math.round(subtotal * DISCOUNT_RATE) : 0;
+    const finalTotal = subtotal - discountAmount;
+
+    return {
+      subtotal,
+      discountCode,
+      discountApplied,
+      discountAmount,
+      finalTotal
+    };
+  }
+
+  function updateOrderSummary(){
+    if(!currentOrder){
+      return;
+    }
+
+    const details = getDiscountDetails();
+    const hint = document.getElementById("discountHint");
+
+    if(hint){
+      if(details.discountApplied){
+        hint.textContent = "تم تطبيق خصم 10%.";
+        hint.className = "text-green-400 text-xs mt-2";
+      }else if(details.discountCode){
+        hint.textContent = "كود الخصم غير صحيح.";
+        hint.className = "text-red-400 text-xs mt-2";
+      }else{
+        hint.textContent = "";
+        hint.className = "text-gray-400 text-xs mt-2";
+      }
+    }
+
+    const discountRow = details.discountApplied
+      ? `<div class="flex justify-between"><span class="text-gray-400">الخصم</span><span class="font-semibold">-${details.discountAmount} EGP</span></div>`
+      : "";
+
+    document.getElementById("orderSummaryBox").innerHTML = `
+      <div class="flex justify-between"><span class="text-gray-400">المنتج</span><span class="font-semibold">${currentOrder.name}</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">اللون</span><span class="font-semibold">${currentOrder.color}</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">المقاس</span><span class="font-semibold">${currentOrder.size}</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">الكمية</span><span class="font-semibold">${currentOrder.qty}</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">السعر</span><span class="font-semibold">${currentOrder.price} EGP</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">الإجمالي قبل الخصم</span><span class="font-semibold">${details.subtotal} EGP</span></div>
+      ${discountRow}
+      <div class="flex justify-between border-t border-white/10 pt-2 mt-2"><span class="text-gray-300">الإجمالي النهائي</span><span class="font-bold">${details.finalTotal} EGP</span></div>
+    `;
+  }
+
+  function closeOrderModal(){
+    document.getElementById("orderModal").classList.remove("active");
+  }
+
+  function createOrderMessage(name, phone, gov, city, address, details){
+    const discountLine = details.discountApplied
+      ? `🏷️ كود الخصم: ${details.discountCode}
+💸 قيمة الخصم: -${details.discountAmount} EGP`
+      : `🏷️ كود الخصم: ${details.discountCode || "لا يوجد"}
+💸 قيمة الخصم: 0 EGP`;
+
+    return `🛍️ أوردر جديد من MOKA
+━━━━━━━━━━━━━━
+
+👤 بيانات العميل
+الاسم: ${name}
+الموبايل: ${phone}
+
+📍 بيانات التوصيل
+المحافظة: ${gov}
+المدينة: ${city}
+العنوان: ${address}
+
+👕 تفاصيل المنتج
+المنتج: ${currentOrder.name}
+اللون: ${currentOrder.color}
+المقاس: ${currentOrder.size}
+الكمية: ${currentOrder.qty}
+سعر القطعة: ${currentOrder.price} EGP
+
+💰 الحساب
+الإجمالي قبل الخصم: ${details.subtotal} EGP
+${discountLine}
+الإجمالي النهائي: ${details.finalTotal} EGP
+
+✅ برجاء تأكيد الأوردر مع العميل.`;
+  }
+
+  function sendOrder(){
+
+    const name = document.getElementById("custName").value.trim();
+    const phone = document.getElementById("custPhone").value.trim();
+    const gov = document.getElementById("custGov").value.trim();
+    const city = document.getElementById("custCity").value.trim();
+    const address = document.getElementById("custAddress").value.trim();
+
+    if(!name || !phone || !gov || !city || !address){
+      alert("من فضلك اكتب الاسم ورقم الموبايل والمحافظة والمدينة والعنوان.");
+      return;
+    }
+
+    if(!currentOrder){
+      alert("حصل خطأ، من فضلك اختار المنتج مرة تانية.");
+      return;
+    }
+
+    const details = getDiscountDetails();
+    const total = details.finalTotal;
+
+    const message = createOrderMessage(name, phone, gov, city, address, details);
+    const orderData = {
+      timestamp: new Date().toISOString(),
+      customerName: name,
+      name: name,
+      phone: phone,
+      governorate: gov,
+      city: city,
+      address: address,
+      product: currentOrder.name,
+      productName: currentOrder.name,
+      color: currentOrder.color,
+      size: currentOrder.size,
+      qty: currentOrder.qty,
+      quantity: currentOrder.qty,
+      price: currentOrder.price,
+      subtotal: details.subtotal,
+      discountCode: details.discountCode,
+      discountApplied: details.discountApplied,
+      discountPercent: details.discountApplied ? 10 : 0,
+      discountAmount: details.discountAmount,
+      totalBeforeDiscount: details.subtotal,
+      totalAfterDiscount: details.finalTotal,
+      total: total,
+      message: message
+    };
+
+    try{
+      fetch(SHEETS_URL, {
+        method: "POST",
+        mode: "no-cors",
+        keepalive: true,
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(orderData)
+      }).catch(function(err){
+        console.error("Sheets logging failed:", err);
+      });
+    }catch(err){
+      console.error("Sheets logging failed:", err);
+    }
+
+    const encoded = encodeURIComponent(message);
+    window.open(`https://wa.me/${SALES_NUMBER}?text=${encoded}`, "_blank");
+
+    closeOrderModal();
+  }
+
+  function openComplaintModal(){
+    document.getElementById("complaintModal").classList.add("active");
+  }
+
+  function closeComplaintModal(){
+    document.getElementById("complaintModal").classList.remove("active");
+  }
+
+  function sendComplaint(){
+
+    const name = document.getElementById("complaintName").value.trim();
+    const phone = document.getElementById("complaintPhone").value.trim();
+    const complaint = document.getElementById("complaintText").value.trim();
+
+    if(!name || !phone || !complaint){
+      alert("من فضلك اكتب كل البيانات.");
+      return;
+    }
+
+    const message =
+`شكوى عميل
+
+الاسم:
+${name}
+
+الموبايل:
+${phone}
+
+الشكوى:
+
+${complaint}`;
+
+    const encoded = encodeURIComponent(message);
+    window.open(`https://wa.me/${COMPLAINTS_NUMBER}?text=${encoded}`, "_blank");
+
+    closeComplaintModal();
+  }
+
+  document.querySelectorAll(".modal").forEach(modal => {
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal){
+        modal.classList.remove("active");
+      }
+    });
+  });
+
+</script>
+
+</body>
+</html>
