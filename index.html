@@ -2,18 +2,10 @@
 <html lang="en">
 <head>
 
-  <!-- ========================================================= -->
-  <!-- BASIC -->
-  <!-- ========================================================= -->
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
   <title>MOKA - Premium Streetwear</title>
-
-  <!-- ========================================================= -->
-  <!-- GOOGLE FONTS -->
-  <!-- ========================================================= -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,24 +15,12 @@
     rel="stylesheet"
   />
 
-  <!-- ========================================================= -->
-  <!-- TAILWIND -->
-  <!-- ========================================================= -->
-
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- ========================================================= -->
-  <!-- FONT AWESOME -->
-  <!-- ========================================================= -->
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   />
-
-  <!-- ========================================================= -->
-  <!-- STYLE -->
-  <!-- ========================================================= -->
 
   <style>
 
@@ -140,14 +120,6 @@
       transition:.4s;
     }
 
-    .product-card img{
-      transition:.6s cubic-bezier(.22,1,.36,1);
-    }
-
-    .product-card:hover img{
-      transform:scale(1.08);
-    }
-
     .product-card:hover{
       transform:translateY(-6px);
     }
@@ -186,6 +158,9 @@
       cursor:pointer;
       transition:.25s;
       user-select:none;
+      font-size:18px;
+      font-weight:700;
+      line-height:1;
     }
 
     .qty-btn:hover{
@@ -201,29 +176,6 @@
       color:white;
       padding:8px 4px;
       font-weight:700;
-    }
-
-    .floating-cart{
-      position:fixed;
-      right:24px;
-      bottom:24px;
-      width:70px;
-      height:70px;
-      background:white;
-      color:black;
-      border-radius:50%;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-size:22px;
-      cursor:pointer;
-      z-index:900;
-      box-shadow:0 0 30px rgba(255,255,255,.25);
-      transition:.3s;
-    }
-
-    .floating-cart:hover{
-      transform:scale(1.1);
     }
 
     .modal{
@@ -247,10 +199,6 @@
       animation:modalIn .35s cubic-bezier(.22,1,.36,1);
       max-height:90vh;
       overflow-y:auto;
-    }
-
-    .popup-box{
-      animation:popIn .3s cubic-bezier(.22,1,.36,1);
     }
 
     .modal-close{
@@ -292,6 +240,95 @@
       max-height:300px;
     }
 
+    /* ===================== CAROUSEL ===================== */
+
+    .carousel{
+      position:relative;
+      width:100%;
+      aspect-ratio: 4 / 5;
+      height:auto;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.1);
+      background:#0a0a0a;
+      touch-action:pan-y;
+    }
+
+    @media (max-width:768px){
+      .carousel{
+        aspect-ratio: 4 / 5;
+      }
+    }
+
+    .carousel-track{
+      display:flex;
+      width:100%;
+      height:100%;
+      transition:transform .5s cubic-bezier(.22,1,.36,1);
+    }
+
+    .carousel-track img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      object-position:center;
+      background:#0a0a0a;
+      flex-shrink:0;
+    }
+
+    .carousel-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      background:rgba(0,0,0,0.5);
+      backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,0.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:5;
+      transition:.25s;
+      color:white;
+    }
+
+    .carousel-btn:hover{
+      background:rgba(255,255,255,0.9);
+      color:black;
+    }
+
+    .carousel-prev{ left:12px; }
+    .carousel-next{ right:12px; }
+
+    .carousel-dots{
+      position:absolute;
+      bottom:12px;
+      left:0;
+      right:0;
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      z-index:5;
+    }
+
+    .carousel-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.35);
+      cursor:pointer;
+      transition:.25s;
+    }
+
+    .carousel-dot.active{
+      background:white;
+      width:18px;
+      border-radius:4px;
+    }
+
   </style>
 
 </head>
@@ -306,12 +343,13 @@
       MOKA
     </h1>
 
-    <div class="hidden md:flex gap-10 uppercase tracking-[3px] text-sm arabic-ui">
-      <a href="#shop" class="hover:text-gray-300 transition">تسوق</a>
-      <a href="#collections" class="hover:text-gray-300 transition">الكولكشن</a>
-      <a href="#reviews" class="hover:text-gray-300 transition">آراء العملاء</a>
-      <a href="#support" class="hover:text-gray-300 transition">الدعم</a>
-      <a href="https://www.instagram.com/moka_fashion109" target="_blank" class="hover:text-gray-300 transition">Instagram</a>
+    <div class="hidden md:flex gap-10 uppercase tracking-[3px] text-sm arabic-ui items-center">
+      <a href="#shop" class="hover:text-gray-300 transition">Shop</a>
+      <a href="#collections" class="hover:text-gray-300 transition">Collections</a>
+      <a href="#reviews" class="hover:text-gray-300 transition">Reviews</a>
+      <a href="#support" class="hover:text-gray-300 transition">Support</a>
+      <a href="https://www.instagram.com/moka_fashion10?igsh=MXFwbGF6dDA3Z3ExcA==" target="_blank" class="hover:text-gray-300 transition text-lg"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@moka.eg?_r=1&_t=ZS-98DvfdEz4Xk" target="_blank" class="hover:text-gray-300 transition text-lg"><i class="fab fa-tiktok"></i></a>
     </div>
 
     <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
@@ -322,11 +360,14 @@
 
   <div class="mobile-menu md:hidden px-5" id="mobileMenu">
     <div class="flex flex-col gap-1 pb-5 uppercase tracking-[2px] text-sm border-t border-white/10 pt-4 arabic-ui">
-      <a href="#shop" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">تسوق</a>
-      <a href="#collections" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">الكولكشن</a>
-      <a href="#reviews" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">آراء العملاء</a>
-      <a href="#support" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">الدعم</a>
-      <a href="https://www.instagram.com/moka_fashion109" target="_blank" class="py-3">Instagram</a>
+      <a href="#shop" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">Shop</a>
+      <a href="#collections" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">Collections</a>
+      <a href="#reviews" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">Reviews</a>
+      <a href="#support" class="py-3 border-b border-white/5" onclick="closeMobileMenu()">Support</a>
+      <div class="flex gap-6 pt-3 text-xl">
+        <a href="https://www.instagram.com/moka_fashion10?igsh=MXFwbGF6dDA3Z3ExcA==" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@moka.eg?_r=1&_t=ZS-98DvfdEz4Xk" target="_blank"><i class="fab fa-tiktok"></i></a>
+      </div>
     </div>
   </div>
 
@@ -335,7 +376,7 @@
 <section class="relative h-screen overflow-hidden">
 
   <img
-    src="./WhatsApp Image 2026-05-25 at 1.22.55 AM.jpeg"
+    src="WhatsApp Image 2026-05-25 at 1.22.55 AM.jpeg"
     alt="MOKA HERO"
     class="hero-image absolute inset-0 w-full h-full object-cover object-center"
   />
@@ -364,36 +405,15 @@
       <div class="fade-up mt-10 flex gap-4 md:gap-5 flex-wrap justify-center">
 
         <a href="#shop" class="main-btn arabic-ui bg-white text-black px-8 md:px-10 py-4 rounded-full uppercase tracking-[2px] font-bold text-sm md:text-base">
-          تسوق الآن
+          Shop Now
         </a>
 
         <a href="#collections" class="main-btn arabic-ui border border-white/70 px-8 md:px-10 py-4 rounded-full uppercase tracking-[2px] text-sm md:text-base">
-          اكتشف
+          Explore
         </a>
 
       </div>
 
-    </div>
-
-  </div>
-
-</section>
-
-<section id="collections" class="py-20 md:py-28 px-5 md:px-6 bg-black">
-
-  <div class="max-w-7xl mx-auto">
-
-    <div class="mb-12 md:mb-16">
-      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black">COLLECTIONS</h2>
-      <p class="text-gray-400 mt-4 text-base md:text-lg">Built for modern streetwear lovers.</p>
-    </div>
-
-    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
-      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Oversized</div>
-      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Hoodies</div>
-      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Gym Wear</div>
-      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition">Pants</div>
-      <div class="glass h-40 md:h-60 rounded-2xl flex items-center justify-center text-center px-2 text-base md:text-2xl font-bold uppercase hover:scale-105 transition col-span-2 lg:col-span-1">Essentials</div>
     </div>
 
   </div>
@@ -404,202 +424,10 @@
 
   <div class="max-w-7xl mx-auto">
 
-    <h2 class="text-4xl sm:text-5xl md:text-7xl font-black mb-12 md:mb-16">FEATURED PRODUCTS</h2>
+    <h2 id="collections" class="text-4xl sm:text-5xl md:text-7xl font-black mb-12 md:mb-16">FEATURED PRODUCTS</h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-
-      <div class="product-card glass rounded-3xl p-4" data-name="Black Oversized Tee" data-price="599">
-
-        <div class="overflow-hidden rounded-2xl border border-white/10">
-          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
-        </div>
-
-        <h3 class="text-xl md:text-2xl font-bold mt-4">Black Oversized Tee</h3>
-        <p class="text-gray-400 mt-1 text-sm">Premium Cotton Oversized Fit</p>
-
-        <div class="flex justify-between items-center mt-4">
-          <span class="text-2xl md:text-3xl font-black">599 EGP</span>
-        </div>
-
-        <div class="mt-4 grid grid-cols-2 gap-3">
-          <div>
-            <label class="field-label arabic-ui">اللون</label>
-            <select class="luxury-select color-select">
-              <option>Black</option>
-              <option>White</option>
-              <option>Gray</option>
-              <option>Beige</option>
-              <option>Brown</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label arabic-ui">المقاس</label>
-            <select class="luxury-select size-select">
-              <option>S</option><option selected>M</option>
-              <option>L</option><option>XL</option><option>XXL</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mt-4 flex items-center justify-between">
-          <label class="field-label mb-0 arabic-ui">الكمية</label>
-          <div class="flex items-center gap-2">
-            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
-            <input type="number" class="qty-input" value="1" min="1">
-            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
-          </div>
-        </div>
-
-        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
-          اطلب الآن
-        </button>
-
-      </div>
-
-      <div class="product-card glass rounded-3xl p-4" data-name="Premium Hoodie" data-price="899">
-
-        <div class="overflow-hidden rounded-2xl border border-white/10">
-          <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
-        </div>
-
-        <h3 class="text-xl md:text-2xl font-bold mt-4">Premium Hoodie</h3>
-        <p class="text-gray-400 mt-1 text-sm">Luxury Winter Collection</p>
-
-        <div class="flex justify-between items-center mt-4">
-          <span class="text-2xl md:text-3xl font-black">899 EGP</span>
-        </div>
-
-        <div class="mt-4 grid grid-cols-2 gap-3">
-          <div>
-            <label class="field-label arabic-ui">اللون</label>
-            <select class="luxury-select color-select">
-              <option>Black</option>
-              <option>White</option>
-              <option>Gray</option>
-              <option>Beige</option>
-              <option>Brown</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label arabic-ui">المقاس</label>
-            <select class="luxury-select size-select">
-              <option>S</option><option selected>M</option>
-              <option>L</option><option>XL</option><option>XXL</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mt-4 flex items-center justify-between">
-          <label class="field-label mb-0 arabic-ui">الكمية</label>
-          <div class="flex items-center gap-2">
-            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
-            <input type="number" class="qty-input" value="1" min="1">
-            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
-          </div>
-        </div>
-
-        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
-          اطلب الآن
-        </button>
-
-      </div>
-
-      <div class="product-card glass rounded-3xl p-4" data-name="White Oversized Tee" data-price="649">
-
-        <div class="overflow-hidden rounded-2xl border border-white/10">
-          <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
-        </div>
-
-        <h3 class="text-xl md:text-2xl font-bold mt-4">White Oversized Tee</h3>
-        <p class="text-gray-400 mt-1 text-sm">Minimal Streetwear Design</p>
-
-        <div class="flex justify-between items-center mt-4">
-          <span class="text-2xl md:text-3xl font-black">649 EGP</span>
-        </div>
-
-        <div class="mt-4 grid grid-cols-2 gap-3">
-          <div>
-            <label class="field-label arabic-ui">اللون</label>
-            <select class="luxury-select color-select">
-              <option>Black</option>
-              <option selected>White</option>
-              <option>Gray</option>
-              <option>Beige</option>
-              <option>Brown</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label arabic-ui">المقاس</label>
-            <select class="luxury-select size-select">
-              <option>S</option><option selected>M</option>
-              <option>L</option><option>XL</option><option>XXL</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mt-4 flex items-center justify-between">
-          <label class="field-label mb-0 arabic-ui">الكمية</label>
-          <div class="flex items-center gap-2">
-            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
-            <input type="number" class="qty-input" value="1" min="1">
-            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
-          </div>
-        </div>
-
-        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
-          اطلب الآن
-        </button>
-
-      </div>
-
-      <div class="product-card glass rounded-3xl p-4" data-name="Luxury Pants" data-price="799">
-
-        <div class="overflow-hidden rounded-2xl border border-white/10">
-          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200" class="w-full h-[320px] md:h-[380px] object-cover"/>
-        </div>
-
-        <h3 class="text-xl md:text-2xl font-bold mt-4">Luxury Pants</h3>
-        <p class="text-gray-400 mt-1 text-sm">Clean Premium Fit</p>
-
-        <div class="flex justify-between items-center mt-4">
-          <span class="text-2xl md:text-3xl font-black">799 EGP</span>
-        </div>
-
-        <div class="mt-4 grid grid-cols-2 gap-3">
-          <div>
-            <label class="field-label arabic-ui">اللون</label>
-            <select class="luxury-select color-select">
-              <option>Black</option>
-              <option>White</option>
-              <option>Gray</option>
-              <option>Beige</option>
-              <option>Brown</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label arabic-ui">المقاس</label>
-            <select class="luxury-select size-select">
-              <option>S</option><option selected>M</option>
-              <option>L</option><option>XL</option><option>XXL</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mt-4 flex items-center justify-between">
-          <label class="field-label mb-0 arabic-ui">الكمية</label>
-          <div class="flex items-center gap-2">
-            <div class="qty-btn" onclick="changeQty(this,-1)">âˆ’</div>
-            <input type="number" class="qty-input" value="1" min="1">
-            <div class="qty-btn" onclick="changeQty(this,1)">+</div>
-          </div>
-        </div>
-
-        <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
-          اطلب الآن
-        </button>
-
-      </div>
-
+    <div id="collectionsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+      <!-- Collection cards injected by JS -->
     </div>
 
   </div>
@@ -664,22 +492,21 @@
     </div>
 
     <div class="flex gap-5 text-2xl">
-      <a href="https://www.instagram.com/moka_fashion109" target="_blank" class="hover:text-gray-400 transition">
+      <a href="https://www.instagram.com/moka_fashion10?igsh=MXFwbGF6dDA3Z3ExcA==" target="_blank" class="hover:text-gray-400 transition">
         <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.tiktok.com/@moka.eg?_r=1&_t=ZS-98DvfdEz4Xk" target="_blank" class="hover:text-gray-400 transition">
+        <i class="fab fa-tiktok"></i>
       </a>
     </div>
 
   </div>
 
   <div class="text-center text-gray-600 mt-10 text-sm px-5">
-    Â© Abdelrahman Elsherif 2026. All rights reserved.
+    © Abdelrahman Elsherif 2026. All rights reserved.
   </div>
 
 </footer>
-
-<a href="#shop" class="floating-cart" title="Go to Shop">
-  <i class="fa-solid fa-bag-shopping"></i>
-</a>
 
 <div class="modal arabic-ui" id="orderModal" dir="rtl">
   <div class="modal-box glass rounded-3xl p-6 md:p-8 w-full max-w-lg relative">
@@ -739,13 +566,13 @@
       </div>
 
       <div>
-        <label class="field-label">المدينة</label>
-        <input type="text" id="custCity" class="luxury-input" placeholder="مثال: مدينة نصر">
+        <label class="field-label">العنوان بالكامل</label>
+        <input type="text" id="custAddress" class="luxury-input" placeholder="الشارع، العمارة، الدور...">
       </div>
 
       <div>
-        <label class="field-label">العنوان بالكامل</label>
-        <input type="text" id="custAddress" class="luxury-input" placeholder="الشارع، العمارة، الدور...">
+        <label class="field-label">ملاحظات (اختياري)</label>
+        <textarea id="custNotes" class="luxury-textarea" rows="3" placeholder="أي ملاحظات إضافية..."></textarea>
       </div>
 
       <div>
@@ -802,10 +629,65 @@
   const SALES_NUMBER = "201121616260";
   const COMPLAINTS_NUMBER = "201145321460";
   const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzAjxzrBSkjdDtJPthPIRmmHdYK4fjt0e0aLA6lp-qnPTllUiCF_hF-H-d47AyngHY/exec";
-  const DISCOUNT_CODE = "A1GX3S1T3N";
+  const DISCOUNT_CODE = "WELCMOKA";
   const DISCOUNT_RATE = 0.10;
 
+  const SIZES = ["M","L","XL","XXL"];
+
+  const PRODUCTS = [
+    {
+      id: "p1",
+      name: "Ranger T-Shirt",
+      subtitle: "Box Fit T-Shirt (Shoulders)",
+      images: ["m1.1.jpeg","m1.2.jpeg","m1.3.jpeg"],
+      colors: ["White","Black","Gray"],
+      price: 650
+    },
+    {
+      id: "p2",
+      name: "Box Fit T-Shirt",
+      subtitle: "",
+      images: ["2.1.jpeg","2.2.jpeg","2.3.jpeg"],
+      colors: ["White","Black","Gray"],
+      price: 650
+    },
+    {
+      id: "p3",
+      name: "Demio Oversize",
+      subtitle: "",
+      images: ["3.1.jpeg","3.2.jpeg","3.3.jpeg"],
+      colors: ["White","Black","Gray"],
+      price: 650
+    },
+    {
+      id: "p4",
+      name: "Boxfit (It Will All Be Geesas)",
+      subtitle: "",
+      images: ["4.1.jpeg","4.2.jpeg","4.3.jpeg"],
+      colors: ["White","Black","Gray"],
+      price: 650
+    },
+    {
+      id: "p5",
+      name: "Basic Oversize",
+      subtitle: "",
+      images: ["5.1.jpeg","5.2.jpeg","5.3.jpeg"],
+      colors: ["White","Black","Burgundy"],
+      price: 600
+    },
+    {
+      id: "p6",
+      name: "Premium Pants",
+      subtitle: "",
+      images: ["5.2.jpeg","3.2.jpeg","4.3.jpeg"],
+      colors: ["Black","White","Gray","Beige","Brown"],
+      price: 799
+    }
+  ];
+
   let currentOrder = null;
+
+  /* ===================== NAV ===================== */
 
   function toggleMobileMenu(){
     const menu = document.getElementById("mobileMenu");
@@ -823,6 +705,126 @@
     icon.classList.remove("fa-xmark");
   }
 
+  /* ===================== RENDER PRODUCTS ===================== */
+
+  function renderProducts(){
+    const grid = document.getElementById("collectionsGrid");
+
+    grid.innerHTML = PRODUCTS.map((p, idx) => {
+
+      const colorOptions = p.colors.map(c => `<option>${c}</option>`).join("");
+      const sizeOptions = SIZES.map((s,i) => `<option ${i===0 ? "selected":""}>${s}</option>`).join("");
+      const slides = p.images.map(img => `<img src="${img}" alt="${p.name}">`).join("");
+      const dots = p.images.map((img,i) => `<div class="carousel-dot ${i===0 ? "active":""}" onclick="goToSlide('${p.id}', ${i})"></div>`).join("");
+
+      return `
+        <div class="product-card glass rounded-3xl p-4" data-name="${p.name}" data-price="${p.price}" id="card-${p.id}">
+
+          <div class="carousel" id="carousel-${p.id}" data-index="0" data-total="${p.images.length}">
+            <div class="carousel-track" id="track-${p.id}">
+              ${slides}
+            </div>
+            <div class="carousel-btn carousel-prev" onclick="prevSlide('${p.id}')"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="carousel-btn carousel-next" onclick="nextSlide('${p.id}')"><i class="fa-solid fa-chevron-right"></i></div>
+            <div class="carousel-dots" id="dots-${p.id}">${dots}</div>
+          </div>
+
+          <h3 class="text-xl md:text-2xl font-bold mt-4">${p.name}</h3>
+          ${p.subtitle ? `<p class="text-gray-400 mt-1 text-sm">${p.subtitle}</p>` : ""}
+
+          <div class="flex justify-between items-center mt-4">
+            <span class="text-2xl md:text-3xl font-black">${p.price} EGP</span>
+          </div>
+
+          <div class="mt-4 grid grid-cols-2 gap-3">
+            <div>
+              <label class="field-label arabic-ui">اللون</label>
+              <select class="luxury-select color-select">${colorOptions}</select>
+            </div>
+            <div>
+              <label class="field-label arabic-ui">المقاس</label>
+              <select class="luxury-select size-select">${sizeOptions}</select>
+            </div>
+          </div>
+
+          <div class="mt-4 flex items-center justify-between">
+            <label class="field-label mb-0 arabic-ui">الكمية</label>
+            <div class="flex items-center gap-2">
+              <div class="qty-btn" onclick="changeQty(this,-1)">-</div>
+              <input type="number" class="qty-input" value="1" min="1">
+              <div class="qty-btn" onclick="changeQty(this,1)">+</div>
+            </div>
+          </div>
+
+          <button onclick="openOrderModal(this)" class="main-btn arabic-ui w-full mt-5 bg-white text-black px-6 py-3 rounded-full uppercase font-bold tracking-[2px]">
+            اطلب الآن
+          </button>
+
+        </div>
+      `;
+    }).join("");
+
+    PRODUCTS.forEach(p => attachSwipe(p.id));
+  }
+
+  /* ===================== CAROUSEL LOGIC ===================== */
+
+  function setSlide(id, index){
+    const carousel = document.getElementById(`carousel-${id}`);
+    const track = document.getElementById(`track-${id}`);
+    const total = parseInt(carousel.getAttribute("data-total"));
+
+    if(index < 0) index = total - 1;
+    if(index >= total) index = 0;
+
+    carousel.setAttribute("data-index", index);
+    track.style.transform = `translateX(-${index * 100}%)`;
+
+    const dots = document.querySelectorAll(`#dots-${id} .carousel-dot`);
+    dots.forEach((d,i) => d.classList.toggle("active", i === index));
+  }
+
+  function nextSlide(id){
+    const carousel = document.getElementById(`carousel-${id}`);
+    const index = parseInt(carousel.getAttribute("data-index"));
+    setSlide(id, index + 1);
+  }
+
+  function prevSlide(id){
+    const carousel = document.getElementById(`carousel-${id}`);
+    const index = parseInt(carousel.getAttribute("data-index"));
+    setSlide(id, index - 1);
+  }
+
+  function goToSlide(id, index){
+    setSlide(id, index);
+  }
+
+  function attachSwipe(id){
+    const carousel = document.getElementById(`carousel-${id}`);
+    let startX = 0;
+    let endX = 0;
+
+    carousel.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive:true });
+
+    carousel.addEventListener("touchend", (e) => {
+      endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+
+      if(Math.abs(diff) > 40){
+        if(diff > 0){
+          nextSlide(id);
+        }else{
+          prevSlide(id);
+        }
+      }
+    }, { passive:true });
+  }
+
+  /* ===================== QUANTITY ===================== */
+
   function changeQty(btn, delta){
     const input = delta < 0 ? btn.nextElementSibling : btn.previousElementSibling;
     let val = parseInt(input.value) || 1;
@@ -830,6 +832,8 @@
     if(val < 1) val = 1;
     input.value = val;
   }
+
+  /* ===================== ORDER MODAL ===================== */
 
   function openOrderModal(btn){
     const card = btn.closest(".product-card");
@@ -916,7 +920,7 @@
     document.getElementById("orderModal").classList.remove("active");
   }
 
-  function createOrderMessage(name, phone, gov, city, address, details){
+  function createOrderMessage(name, phone, gov, address, notes, details){
     const discountLine = details.discountApplied
       ? `🏷️ كود الخصم: ${details.discountCode}
 💸 قيمة الخصم: -${details.discountAmount} EGP`
@@ -932,8 +936,8 @@
 
 📍 بيانات التوصيل
 المحافظة: ${gov}
-المدينة: ${city}
 العنوان: ${address}
+${notes ? `ملاحظات: ${notes}` : ""}
 
 👕 تفاصيل المنتج
 المنتج: ${currentOrder.name}
@@ -955,11 +959,11 @@ ${discountLine}
     const name = document.getElementById("custName").value.trim();
     const phone = document.getElementById("custPhone").value.trim();
     const gov = document.getElementById("custGov").value.trim();
-    const city = document.getElementById("custCity").value.trim();
     const address = document.getElementById("custAddress").value.trim();
+    const notes = document.getElementById("custNotes").value.trim();
 
-    if(!name || !phone || !gov || !city || !address){
-      alert("من فضلك اكتب الاسم ورقم الموبايل والمحافظة والمدينة والعنوان.");
+    if(!name || !phone || !gov || !address){
+      alert("من فضلك اكتب الاسم ورقم الموبايل والمحافظة والعنوان.");
       return;
     }
 
@@ -971,15 +975,16 @@ ${discountLine}
     const details = getDiscountDetails();
     const total = details.finalTotal;
 
-    const message = createOrderMessage(name, phone, gov, city, address, details);
+    const message = createOrderMessage(name, phone, gov, address, notes, details);
+
     const orderData = {
       timestamp: new Date().toISOString(),
       customerName: name,
       name: name,
       phone: phone,
       governorate: gov,
-      city: city,
       address: address,
+      notes: notes,
       product: currentOrder.name,
       productName: currentOrder.name,
       color: currentOrder.color,
@@ -998,6 +1003,7 @@ ${discountLine}
       message: message
     };
 
+    // Action 1: log order to Google Sheets
     try{
       fetch(SHEETS_URL, {
         method: "POST",
@@ -1014,11 +1020,14 @@ ${discountLine}
       console.error("Sheets logging failed:", err);
     }
 
+    // Action 2: open WhatsApp with the sales number
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/${SALES_NUMBER}?text=${encoded}`, "_blank");
 
     closeOrderModal();
   }
+
+  /* ===================== COMPLAINTS ===================== */
 
   function openComplaintModal(){
     document.getElementById("complaintModal").classList.add("active");
@@ -1058,11 +1067,17 @@ ${complaint}`;
     closeComplaintModal();
   }
 
-  document.querySelectorAll(".modal").forEach(modal => {
-    modal.addEventListener("click", (e) => {
-      if(e.target === modal){
-        modal.classList.remove("active");
-      }
+  /* ===================== INIT ===================== */
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderProducts();
+
+    document.querySelectorAll(".modal").forEach(modal => {
+      modal.addEventListener("click", (e) => {
+        if(e.target === modal){
+          modal.classList.remove("active");
+        }
+      });
     });
   });
 
