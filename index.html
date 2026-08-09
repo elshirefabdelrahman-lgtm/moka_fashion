@@ -711,6 +711,182 @@
   const DISCOUNT_CODE = "WELCMOKA";
   const DISCOUNT_RATE = 0.10;
 
+  const META_CURRENCY = "EGP";
+  const metaTrackedOnce = new Set();
+  const metaRecentEvents = new Map();
+
+  function metaContentId(name){
+    return String(name || "product")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
+
+  function createOrderTrackingId(){
+    if(window.crypto && typeof window.crypto.randomUUID === "function"){
+      return window.crypto.randomUUID();
+    }
+    return `moka-${Date.now()}-${Math.random().toString(36).slice(2,10)}`;
+  }
+
+  function wasMetaEventTrackedOnce(key){
+    if(!key) return false;
+
+    const storageKey = `moka_meta_${key}`;
+    if(metaTrackedOnce.has(storageKey)) return true;
+
+    try{
+      if(sessionStorage.getItem(storageKey) === "1"){
+        metaTrackedOnce.add(storageKey);
+        return true;
+      }
+    }catch(err){
+      // In-memory tracking still prevents duplicates if storage is unavailable.
+    }
+
+    return false;
+  }
+
+  function rememberMetaEvent(key){
+    if(!key) return;
+
+    const storageKey = `moka_meta_${key}`;
+    metaTrackedOnce.add(storageKey);
+
+    try{
+      sessionStorage.setItem(storageKey, "1");
+    }catch(err){
+      // Tracking must never interrupt the customer experience.
+    }
+  }
+
+  function trackMetaEvent(eventName, parameters = {}, options = {}){
+    if(typeof window.fbq !== "function") return false;
+
+    const onceKey = options.onceKey || "";
+    if(wasMetaEventTrackedOnce(onceKey)) return false;
+
+    const dedupeKey = options.dedupeKey || "";
+    const dedupeMs = options.dedupeMs || 1200;
+    const now = Date.now();
+
+    if(dedupeKey){
+      const lastSentAt = metaRecentEvents.get(dedupeKey) || 0;
+      if(now - lastSentAt < dedupeMs) return false;
+      metaRecentEvents.set(dedupeKey, now);
+    }
+
+    try{
+      if(options.custom){
+        window.fbq("trackCustom", eventName, parameters);
+      }else{
+        window.fbq("track", eventName, parameters);
+      }
+      rememberMetaEvent(onceKey);
+      return true;
+    }catch(err){
+      console.error("Meta Pixel tracking failed:", err);
+      return false;
+    }
+  }
+
+  function getProductCategory(card){
+    if(card.closest("#womenSlider")) return "Women - Linen Suits";
+    if(card.closest("#shoesSlider")) return "Shoes";
+    if(card.getAttribute("data-name") === "Wide Leg Pants") return "Pants";
+    return "Men - Clothing";
+  }
+
+  function getCardMetaData(card){
+    const name = card.getAttribute("data-name") || "MOKA Product";
+    const price = parseFloat(card.getAttribute("data-price")) || 0;
+
+    return {
+      content_name: name,
+      content_ids: [metaContentId(name)],
+      content_type: "product",
+      content_category: getProductCategory(card),
+      value: price,
+      currency: META_CURRENCY
+    };
+  }
+
+  function getOrderMetaData(details){
+    return {
+      content_name: currentOrder.name,
+      content_ids: [metaContentId(currentOrder.name)],
+      content_type: "product",
+      content_category: currentOrder.category,
+      value: details.finalTotal,
+      currency: META_CURRENCY,
+      num_items: currentOrder.qty,
+      quantity: currentOrder.qty,
+      color: currentOrder.color,
+      size: currentOrder.size
+    };
+  }
+
+  function setupProductViewTracking(){
+    const cards = document.querySelectorAll(".product-card");
+
+    if(!("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting || entry.intersectionRatio < 0.55) return;
+
+        const card = entry.target;
+        const data = getCardMetaData(card);
+        const contentId = data.content_ids[0];
+
+        trackMetaEvent("ViewContent", data, {
+          onceKey: `view_content_${contentId}`
+        });
+        observer.unobserve(card);
+      });
+    }, { threshold:[0.55] });
+
+    cards.forEach(card => observer.observe(card));
+  }
+
+  function setupScrollDepthTracking(){
+    const milestones = [25,50,75,90];
+    let ticking = false;
+
+    function checkScrollDepth(){
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if(scrollableHeight <= 0){
+        ticking = false;
+        return;
+      }
+
+      const percent = Math.min(100, Math.round((window.scrollY / scrollableHeight) * 100));
+
+      milestones.forEach(milestone => {
+        if(percent < milestone) return;
+
+        trackMetaEvent("ScrollDepth", {
+          percent: milestone,
+          scroll_depth: `${milestone}%`
+        }, {
+          custom: true,
+          onceKey: `scroll_depth_${milestone}`
+        });
+      });
+
+      ticking = false;
+    }
+
+    window.addEventListener("scroll", () => {
+      if(ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(checkScrollDepth);
+    }, { passive:true });
+
+    checkScrollDepth();
+  }
+
   const SIZES = ["M","L","XL","XXL"];
 
   const PRODUCTS = [
@@ -1100,13 +1276,27 @@
     const size = card.querySelector(".size-select").value;
     const qty = parseInt(card.querySelector(".qty-input").value) || 1;
 
-    currentOrder = { name, price, color, size, qty };
+    currentOrder = {
+      name,
+      price,
+      color,
+      size,
+      qty,
+      category: getProductCategory(card),
+      trackingId: createOrderTrackingId()
+    };
 
     document.getElementById("discountCode").value = "";
     document.getElementById("discountHint").textContent = "";
     updateOrderSummary();
 
     document.getElementById("orderModal").classList.add("active");
+
+    const checkoutDetails = getDiscountDetails();
+    trackMetaEvent("InitiateCheckout", getOrderMetaData(checkoutDetails), {
+      dedupeKey: `checkout_${metaContentId(name)}`,
+      dedupeMs: 1500
+    });
   }
 
   function getDiscountDetails(){
@@ -1260,6 +1450,17 @@ ${discountLine}
       message: message
     };
 
+    const metaOrderData = {
+      ...getOrderMetaData(details),
+      transaction_id: currentOrder.trackingId,
+      discount_applied: details.discountApplied,
+      discount_code: details.discountApplied ? details.discountCode : ""
+    };
+
+    trackMetaEvent("Lead", metaOrderData, {
+      onceKey: `lead_${currentOrder.trackingId}`
+    });
+
     // Action 1: log order to Google Sheets
     try{
       fetch(SHEETS_URL, {
@@ -1277,8 +1478,22 @@ ${discountLine}
       console.error("Sheets logging failed:", err);
     }
 
+    trackMetaEvent("Purchase", metaOrderData, {
+      onceKey: `purchase_${currentOrder.trackingId}`
+    });
+
     // Action 2: open WhatsApp with the sales number
     const encoded = encodeURIComponent(message);
+
+    trackMetaEvent("Contact", {
+      content_name: currentOrder.name,
+      content_ids: [metaContentId(currentOrder.name)],
+      content_type: "product",
+      contact_method: "WhatsApp"
+    }, {
+      onceKey: `contact_${currentOrder.trackingId}`
+    });
+
     window.open(`https://wa.me/${SALES_NUMBER}?text=${encoded}`, "_blank");
 
     closeOrderModal();
@@ -1330,6 +1545,8 @@ ${complaint}`;
     renderProducts();
     renderWomen();
     renderShoes();
+    setupProductViewTracking();
+    setupScrollDepthTracking();
 
     document.querySelectorAll(".modal").forEach(modal => {
       modal.addEventListener("click", (e) => {
@@ -1344,4 +1561,3 @@ ${complaint}`;
 
 </body>
 </html>
-
