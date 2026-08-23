@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MOKA Admin Login</title><link rel="stylesheet" href="admin.css"></head>
+<body class="login-page"><main class="login-card"><div class="brand">MOKA</div><h1>Admin Login</h1><p class="muted">Sign in with an authorized Supabase account.</p><form id="loginForm"><label>Email</label><input class="input" id="email" type="email" autocomplete="username" required><br><br><label>Password</label><input class="input" id="password" type="password" autocomplete="current-password" required><br><br><button class="btn" id="loginButton" type="submit">Sign In</button><p id="message" class="error" role="alert"></p></form><p><a class="muted" href="index.html">← Back to MOKA</a></p></main>
+<script type="module">
+import {getSupabaseClient} from './supabase-client.js';
+const form=document.querySelector('#loginForm'),msg=document.querySelector('#message'),button=document.querySelector('#loginButton');
+form.addEventListener('submit',async e=>{e.preventDefault();button.disabled=true;msg.textContent='';try{const sb=await getSupabaseClient();const {error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});if(error)throw error;const {data:allowed,error:authError}=await sb.rpc('is_admin');if(authError||!allowed){await sb.auth.signOut();throw new Error('This account is not authorized.')}location.href='admin.html';}catch(err){msg.textContent=err.message||'Login failed.';}finally{button.disabled=false;}});
+</script></body></html>
